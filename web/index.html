@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>文档对象工坊</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt=""></div>
+        <div>
+          <div class="brand-name">文档对象工坊</div>
+          <div class="brand-caption">DOCUMENT OBJECT STUDIO</div>
+        </div>
+      </div>
+      <div class="topbar-center">
+        <div id="fileBadge" class="file-badge is-empty">
+          <span class="file-dot"></span><span id="fileName">尚未打开文档</span>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="openButton" class="button button-subtle" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <span>打开文档</span>
+        </button>
+        <button id="copyButton" class="button button-primary" type="button" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="2"/><path d="M15 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2"/></svg>
+          <span>复制勾选项</span><kbd>Ctrl C</kbd>
+        </button>
+        <button id="quitButton" class="icon-button" type="button" title="退出" aria-label="退出">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l8 8M16 8l-8 8"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="page-rail panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">DOCUMENT</p><h1>页面</h1></div>
+          <span id="pageCount" class="count-pill">—</span>
+        </div>
+        <div id="pageList" class="page-list">
+          <div class="rail-empty">打开文档后<br>页面会显示在这里</div>
+        </div>
+        <div class="rail-footnote"><span class="status-indicator"></span><span>本地安全 · ← ↑ ↓ → 翻页</span></div>
+      </aside>
+
+      <section class="preview-column">
+        <div class="preview-toolbar panel">
+          <div class="preview-label"><span class="preview-label-icon">◉</span><span>页面预览</span></div>
+          <div class="page-controls">
+            <button id="previousPage" class="small-icon-button" type="button" aria-label="上一页" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 18-6-6 6-6"/></svg>
+            </button>
+            <div id="pagePosition" class="page-position">— / —</div>
+            <button id="nextPage" class="small-icon-button" type="button" aria-label="下一页" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+          <div class="zoom-controls">
+            <button id="zoomOut" class="small-icon-button" type="button" aria-label="缩小">−</button>
+            <span id="zoomValue">100%</span>
+            <button id="zoomIn" class="small-icon-button" type="button" aria-label="放大">+</button>
+            <button id="fitPage" class="fit-button" type="button">适合窗口</button>
+          </div>
+        </div>
+
+        <div id="dropTarget" class="preview-stage">
+          <div id="emptyState" class="empty-state">
+            <div class="empty-illustration" aria-hidden="true">
+              <div class="sheet sheet-back"></div>
+              <div class="sheet sheet-front"><span></span><span></span><span></span><i></i></div>
+              <div class="spark spark-one">✦</div><div class="spark spark-two">✦</div>
+            </div>
+            <p class="eyebrow">ONE WORKSPACE, EVERY OBJECT</p>
+            <h2>从文档中取出你需要的对象</h2>
+            <p class="empty-copy">打开 PPTX、PDF 或 DOCX，浏览页面并从整份文档中勾选图片与表格。</p>
+            <button id="emptyOpenButton" class="button button-primary" type="button">选择一个文档 <span>→</span></button>
+            <p class="drop-hint">也可以将文件拖到此处</p>
+            <div class="format-list"><span>PPTX</span><span>PDF</span><span>DOCX</span></div>
+          </div>
+          <div id="pageCanvas" class="page-canvas" hidden>
+            <img id="pageImage" alt="文档页面预览">
+            <div id="objectOverlay" class="object-overlay"></div>
+          </div>
+          <div id="loadingPanel" class="loading-panel" role="status" aria-live="polite" hidden>
+            <div class="loading-card">
+              <div class="loading-heading">
+                <span class="loading-spinner" aria-hidden="true"></span>
+                <div><strong id="loadingTitle">正在打开文档</strong><p id="loadingDetail">正在准备文件…</p></div>
+                <span id="loadingPercent" class="loading-percent">0%</span>
+              </div>
+              <div class="progress-track"><div id="loadingFill" class="progress-fill"></div></div>
+              <div class="loading-foot"><span>高清渲染 · 坐标精确映射</span><span>仅在本机处理</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="preview-footbar">
+          <span id="statusMessage"><span class="status-indicator"></span>准备就绪</span>
+          <span class="shortcut-hint">点击页面对象或右侧列表以选择</span>
+        </div>
+      </section>
+
+      <aside class="object-panel panel">
+        <div class="panel-heading object-heading">
+          <div><p class="eyebrow">DOCUMENT OBJECTS</p><h2 id="objectTitle">全篇图片与表格</h2></div>
+          <span id="objectCount" class="count-pill">0</span>
+        </div>
+        <label class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m16 16 4 4"/></svg>
+          <input id="objectSearch" type="search" placeholder="搜索对象" autocomplete="off">
+          <kbd>/</kbd>
+        </label>
+        <div id="selectionHint" class="selection-hint">整份文档 · 勾选图片或表格，可跨页多选</div>
+        <div id="objectList" class="object-list">
+          <div class="object-list-empty">打开文档后<br>可勾选整篇中的图片与表格</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-card-head"><span class="detail-icon">◇</span><span>对象信息</span></div>
+          <div id="objectDetails" class="object-details">仅复制图片与表格；勾选项可跨页面保留。</div>
+        </div>
+        <button id="copyPanelButton" class="button button-copy-wide" type="button" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="2"/><path d="M15 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2"/></svg>
+          复制勾选的图片与表格
+        </button>
+        <p class="clipboard-note">单张图片保留原始数据；多选内容以 HTML 合并复制</p>
+      </aside>
+    </main>
+  </div>
+
+  <input id="fileInput" type="file" accept=".pdf,.pptx,.docx,application/pdf" hidden>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

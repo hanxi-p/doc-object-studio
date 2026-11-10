@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.vscode/
+build/
+dist/
+*.log
+SAMPLE_CHECK_RESULTS.json
+WEBUI_CHECK_RESULTS.json
+EXE_CHECK_RESULTS.json
+
+# User supplied documents are local-only test fixtures.
+test_samples/*
+!test_samples/README.txt
