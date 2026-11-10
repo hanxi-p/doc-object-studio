@@ -14,7 +14,7 @@ Windows 本地文档对象工具。用浏览器打开 PPTX、PDF、DOCX，在整
 
 ## 下载
 
-前往 [GitHub Releases](https://github.com/hanxi-p/doc-object-studio/releases/latest) 下载 Windows 版 EXE 和源码压缩包。
+前往 [GitHub Releases](https://github.com/hanxi-p/doc-object-studio/releases/latest) 查看版本说明，或[直接下载 Windows EXE](https://raw.githubusercontent.com/hanxi-p/doc-object-studio/main/download/%E6%96%87%E6%A1%A3%E5%AF%B9%E8%B1%A1%E5%B7%A5%E5%9D%8A_%E5%85%A8%E7%AF%87%E5%8B%BE%E9%80%89%E7%89%88.exe)。GitHub 自动生成的源码 ZIP 也包含此 EXE。校验值见 [SHA256SUMS.txt](download/SHA256SUMS.txt)。
 
 EXE 会启动本机 WebUI 并打开默认浏览器。使用 PowerPoint 或 Word 原生复制功能需要安装 Microsoft Office。
 
